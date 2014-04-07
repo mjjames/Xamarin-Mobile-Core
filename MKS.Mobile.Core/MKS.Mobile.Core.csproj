@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="HostConnectivityException.cs" />
     <Compile Include="Interfaces\IReachability.cs" />
+    <Compile Include="Interfaces\ITimer.cs" />
     <Compile Include="NetworkStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

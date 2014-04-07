@@ -42,8 +42,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <MtouchDebug>true</MtouchDebug>
+    <MtouchDebug>True</MtouchDebug>
     <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchSdkVersion>6.1</MtouchSdkVersion>
+    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchProfiling>False</MtouchProfiling>
+    <MtouchExtraArgs>--compiler=clang --keeptemp</MtouchExtraArgs>
+    <MtouchArch>Default, ARMv7</MtouchArch>
+    <MtouchUseLlvm>False</MtouchUseLlvm>
+    <MtouchUseThumb>False</MtouchUseThumb>
+    <MtouchUseSGen>False</MtouchUseSGen>
+    <MtouchUseRefCounting>False</MtouchUseRefCounting>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -53,6 +62,16 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchSdkVersion>Default</MtouchSdkVersion>
+    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchDebug>False</MtouchDebug>
+    <MtouchProfiling>False</MtouchProfiling>
+    <MtouchExtraArgs>--compiler=clang</MtouchExtraArgs>
+    <MtouchArch>Default, ARMv7</MtouchArch>
+    <MtouchUseLlvm>False</MtouchUseLlvm>
+    <MtouchUseThumb>False</MtouchUseThumb>
+    <MtouchUseSGen>False</MtouchUseSGen>
+    <MtouchUseRefCounting>False</MtouchUseRefCounting>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
@@ -74,23 +93,18 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\MKS.Mobile.Core\HostConnectivityException.cs">
-      <Link>ImportedCore\HostConnectivityException.cs</Link>
-    </Compile>
-    <Compile Include="..\MKS.Mobile.Core\Interfaces\IReachability.cs">
-      <Link>ImportedCore\IReachability.cs</Link>
-    </Compile>
-    <Compile Include="..\MKS.Mobile.Core\NetworkStatus.cs">
-      <Link>ImportedCore\NetworkStatus.cs</Link>
-    </Compile>
     <Compile Include="Reachability.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="iOSTimer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MKS.Mobile.Core\MKS.Mobile.Core.csproj">
+      <Project>{0e8bc1f5-a4de-4bf8-8257-0924b1d078b1}</Project>
+      <Name>MKS.Mobile.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
   </ItemGroup>
