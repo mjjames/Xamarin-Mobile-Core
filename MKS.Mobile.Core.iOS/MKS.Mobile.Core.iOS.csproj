@@ -102,11 +102,12 @@
       <Project>{0e8bc1f5-a4de-4bf8-8257-0924b1d078b1}</Project>
       <Name>MKS.Mobile.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
 </Project>
