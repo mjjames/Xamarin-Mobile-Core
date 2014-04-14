@@ -34,11 +34,17 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HostConnectivityException.cs" />
+    <Compile Include="Interfaces\IItemQueueStorage.cs" />
+    <Compile Include="Interfaces\IQueueItem.cs" />
+    <Compile Include="Interfaces\IQueueItemProcessor.cs" />
     <Compile Include="Interfaces\IReachability.cs" />
+    <Compile Include="Interfaces\IRemoteServiceItemQueue.cs" />
     <Compile Include="Interfaces\ITimer.cs" />
+    <Compile Include="Services\RemoteServiceItemQueue.cs" />
     <Compile Include="NetworkStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

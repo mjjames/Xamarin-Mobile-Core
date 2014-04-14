@@ -12,7 +12,7 @@ namespace MKS.Mobile.Core.iOS
 {
     public class iOSTimer : ITimer
     {
-        private readonly Timer _timer;
+        readonly protected Timer _timer;
 
         public iOSTimer()
         {

@@ -93,18 +93,33 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="iOSAutoResetTimer.cs" />
+    <Compile Include="Models\QueueItem.cs" />
     <Compile Include="Reachability.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="iOSTimer.cs" />
+    <Compile Include="Services\ItemQueueDatabaseStorage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MKS.Mobile.Core, Version=1.3.5210.21083, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="MKS.Mobile.Core, Version=1.4.5217.28467, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MKS.Mobile.Core.1.3.0\lib\portable-net45+wp8+win8\MKS.Mobile.Core.dll</HintPath>
+      <HintPath>..\packages\MKS.Mobile.Core.1.4.3.1\lib\portable-net45+wp8+win8\MKS.Mobile.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\portable-net40+sl5+wp80+win8+monotouch+monoandroid\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite">
+      <HintPath>..\Components\sqlite-net-1.0.1\lib\ios\SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="sqlite-net">
+      <Visible>False</Visible>
+      <Version>1.0.1</Version>
+    </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
