@@ -34,19 +34,34 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HostConnectivityException.cs" />
     <Compile Include="Interfaces\IItemQueueStorage.cs" />
+    <Compile Include="Interfaces\ILocationService.cs" />
     <Compile Include="Interfaces\IQueueItem.cs" />
     <Compile Include="Interfaces\IQueueItemProcessor.cs" />
     <Compile Include="Interfaces\IReachability.cs" />
     <Compile Include="Interfaces\IRemoteServiceItemQueue.cs" />
+    <Compile Include="Interfaces\ISettingsService.cs" />
     <Compile Include="Interfaces\ITimer.cs" />
+    <Compile Include="Models\AppSettings.cs" />
+    <Compile Include="Models\DateRange.cs" />
+    <Compile Include="Models\DueTimeSpan.cs" />
+    <Compile Include="Models\LatLon.cs" />
+    <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\UpdatedTimeSpan.cs" />
     <Compile Include="Services\RemoteServiceItemQueue.cs" />
     <Compile Include="NetworkStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
