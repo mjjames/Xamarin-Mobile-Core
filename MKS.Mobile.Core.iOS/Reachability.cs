@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using MKS.Mobile.Core.Interfaces;
+﻿using MKS.Mobile.Core.Interfaces;
 using MonoTouch.CoreFoundation;
 using MonoTouch.SystemConfiguration;
+using System;
+using System.Net;
 
 // Class pinched from https://github.com/xamarin/monotouch-samples/blob/master/ReachabilitySample/reachability.cs
 // however reworked to be non static as I want it as an interface so we can pass it into viewmodels etc

@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
 using MKS.Mobile.Core.Interfaces;
 using Newtonsoft.Json;
 using SQLite;
+using System;
 
 namespace MKS.Mobile.Core.iOS.Models
 {

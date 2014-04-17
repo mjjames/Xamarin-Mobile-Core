@@ -1,14 +1,9 @@
-using System;
+using MKS.Mobile.Core.Interfaces;
+using MKS.Mobile.Core.iOS.Models;
+using SQLite;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
-using SQLite;
-using MKS.Mobile.Core.Interfaces;
 using System.Threading.Tasks;
-using MKS.Mobile.Core.iOS.Models;
 
 namespace MKS.Mobile.Core.iOS.Services
 {

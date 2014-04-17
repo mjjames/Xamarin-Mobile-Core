@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using MonoTouch.Dialog;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace MKS.Mobile.Core.iOS.Views
