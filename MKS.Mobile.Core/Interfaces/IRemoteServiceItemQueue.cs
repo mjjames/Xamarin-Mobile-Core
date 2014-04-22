@@ -7,5 +7,7 @@ namespace MKS.Mobile.Core.Interfaces
         Task Enqueue(object item);
         void StartQueueProcessing();
         void StopQueueProcessing();
+        bool IsQueueProcessingEnabled { get; }
+        int Count { get; }
     }
 }

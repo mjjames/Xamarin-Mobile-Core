@@ -23,7 +23,7 @@ namespace MKS.Mobile.Core.Models
             _processors = new List<IQueueItemProcessor>(queueProcessors);
             _queue = new Queue<IQueueItem>();
             _startupTask = LoadQueue();
-            
+           
             _queueTimer = processQueueTimer;
             _queueTimer.Elapsed = async (timeStamp) => await ProcessQueue();
             _queueTimer.IsEnabled = false;
@@ -81,7 +81,7 @@ namespace MKS.Mobile.Core.Models
             var results = await Task.WhenAll<bool>(processTasks);
             if (results.All(r => r))
             {
-                _queue.Dequeue();
+                await Dequeue(item);
                 return true;
             }
             return false;
@@ -92,6 +92,23 @@ namespace MKS.Mobile.Core.Models
         private async Task Dequeue(IQueueItem item)
         {
             await _queueStorage.Remove(item);
+            _queue.Dequeue();
+        }
+
+        public bool IsQueueProcessingEnabled
+        {
+            get
+            {
+                return _queueTimer.IsEnabled;
+            }
+        }
+
+        public int Count
+        {
+            get
+            {
+                return _queue.Count;
+            }
         }
 
         public void StartQueueProcessing()
