@@ -37,6 +37,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HostConnectivityException.cs" />
+    <Compile Include="Interfaces\IBatteryInfoService.cs" />
+    <Compile Include="Interfaces\IEmailService.cs" />
+    <Compile Include="Interfaces\IFileStorageService.cs" />
+    <Compile Include="Interfaces\IHttpUtility.cs" />
+    <Compile Include="Interfaces\IImageHelper.cs" />
     <Compile Include="Interfaces\IItemQueueStorage.cs" />
     <Compile Include="Interfaces\ILocationService.cs" />
     <Compile Include="Interfaces\IQueueItem.cs" />
@@ -48,6 +53,7 @@
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\DateRange.cs" />
     <Compile Include="Models\DueTimeSpan.cs" />
+    <Compile Include="Models\EmailResult.cs" />
     <Compile Include="Models\LatLon.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\UpdatedTimeSpan.cs" />
