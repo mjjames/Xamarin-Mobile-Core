@@ -9,5 +9,9 @@ namespace MKS.Mobile.Core.Interfaces
         Task<IEnumerable<IQueueItem>> AddRange(IEnumerable<object> items);
         Task Remove(IQueueItem item);
         Task<IList<IQueueItem>> EntireQueue();
+        /// <summary>
+        /// Removes all items from the queue storage
+        /// </summary>
+        Task Reset();
     }
 }

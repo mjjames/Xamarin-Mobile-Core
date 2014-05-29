@@ -33,6 +33,7 @@ namespace MKS.Mobile.Core.Models
             {
                 _queueTimer.IsEnabled = _reachability.InternetConnectionStatus() != NetworkStatus.NotReachable;
             };
+            AutoStartQueueProcessing = true;
         }
 
         private Task LoadQueue()
@@ -49,8 +50,13 @@ namespace MKS.Mobile.Core.Models
         }
 
         public async Task Enqueue(object item){
-            var queueItem = await _queueStorage.Add(item);
-            Action<Task> enqueue = (task) => _queue.Enqueue(queueItem);
+            var queueItem = await _queueStorage.Add(item).ConfigureAwait(false);
+            Action<Task> enqueue = (task) =>
+            {
+                _queue.Enqueue(queueItem);
+                //following enqueue see if we should kick start start queue processing
+                _queueTimer.IsEnabled = AutoStartQueueProcessing && _reachability.RemoteHostStatus() != NetworkStatus.NotReachable;
+            };
             if (_isLoaded)
             {
                 enqueue(null);
@@ -67,7 +73,11 @@ namespace MKS.Mobile.Core.Models
             {
                 processingError = !await ProcessItem(_queue.Peek());
             }
-            _queueTimer.Reset();
+            //only restart the queue timer if auto start is disabled or if autostart is enabled but we have outstanding queue items
+            if (!AutoStartQueueProcessing || _queue.Any())
+            {
+                _queueTimer.Reset();
+            }
         }
 
         private async Task<bool> ProcessItem(IQueueItem item)
@@ -91,7 +101,7 @@ namespace MKS.Mobile.Core.Models
 
         private async Task Dequeue(IQueueItem item)
         {
-            await _queueStorage.Remove(item);
+            await _queueStorage.Remove(item).ConfigureAwait(false);
             _queue.Dequeue();
         }
 
@@ -111,6 +121,16 @@ namespace MKS.Mobile.Core.Models
             }
         }
 
+        /// <summary>
+        /// Whether queue procesing should automatically start folling an enqueue
+        /// Use to optimise use of timers firing for empty queues
+        /// </summary>
+        public bool AutoStartQueueProcessing
+        {
+            get;
+            set;
+        }
+
         public void StartQueueProcessing()
         {
             _queueTimer.IsEnabled = true;
@@ -119,6 +139,21 @@ namespace MKS.Mobile.Core.Models
         public void StopQueueProcessing()
         {
             _queueTimer.IsEnabled = false;
+        }
+        /// <summary>
+        /// Clears the queue without processing any of its current items
+        /// </summary>
+        /// <returns></returns>
+        public async Task Reset()
+        {
+            _queueTimer.IsEnabled = false;
+            _queue.Clear();
+            await _queueStorage.Reset();
+            //only restart the queue if autostart is disabled
+            if (!AutoStartQueueProcessing)
+            {
+                _queueTimer.IsEnabled = true;
+            }
         }
     }
 }

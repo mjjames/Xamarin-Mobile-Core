@@ -27,6 +27,75 @@ namespace MKS.Mobile.Core.Tests
         }
 
         [Fact]
+        public async Task EnqueueItemWithAutoStartEnabledAndTimerDisabledWithCarrierNetworkConnectivityStartsTimerAfterEnqueue()
+        {
+            var mockQueueStorage = new Mock<IItemQueueStorage>();
+            mockQueueStorage.Setup(q => q.Add(It.Is<string>(v => v == "test"))).ReturnsAsync(new FakeObjectItem()).Verifiable();
+            mockQueueStorage.Setup(q => q.EntireQueue()).ReturnsAsync(new List<IQueueItem>());
+            var mockQueueTimer = new Mock<ITimer>();
+            var mockReachability = new Mock<IReachability>();
+            mockReachability.Setup(q => q.RemoteHostStatus()).Returns(NetworkStatus.ReachableViaCarrierDataNetwork);
+            var queue = new RemoteServiceItemQueue(mockQueueStorage.Object, Enumerable.Empty<IQueueItemProcessor>(), mockQueueTimer.Object, mockReachability.Object)
+            {
+                AutoStartQueueProcessing = true
+            };
+            await queue.Enqueue("test");
+            mockQueueTimer.VerifySet(t => t.IsEnabled = true, Times.Once);
+        }
+
+        [Fact]
+        public async Task EnqueueItemWithAutoStartEnabledAndTimerDisabledWithWifiNetworkConnectivityStartsTimerAfterEnqueue()
+        {
+            var mockQueueStorage = new Mock<IItemQueueStorage>();
+            mockQueueStorage.Setup(q => q.Add(It.Is<string>(v => v == "test"))).ReturnsAsync(new FakeObjectItem()).Verifiable();
+            mockQueueStorage.Setup(q => q.EntireQueue()).ReturnsAsync(new List<IQueueItem>());
+            var mockQueueTimer = new Mock<ITimer>();
+            var mockReachability = new Mock<IReachability>();
+            mockReachability.Setup(q => q.RemoteHostStatus()).Returns(NetworkStatus.ReachableViaCarrierDataNetwork);
+            var queue = new RemoteServiceItemQueue(mockQueueStorage.Object, Enumerable.Empty<IQueueItemProcessor>(), mockQueueTimer.Object, mockReachability.Object)
+            {
+                AutoStartQueueProcessing = true
+            };
+            
+            await queue.Enqueue("test");
+            mockQueueTimer.VerifySet(t => t.IsEnabled = true, Times.Once);
+        }
+
+        [Fact]
+        public async Task EnqueueItemWithAutoStartEnabledAndTimerDisabledWithoutNetworkConnectivityDoesNotStartTimerAfterEnqueue()
+        {
+            var mockQueueStorage = new Mock<IItemQueueStorage>();
+            mockQueueStorage.Setup(q => q.Add(It.Is<string>(v => v == "test"))).ReturnsAsync(new FakeObjectItem()).Verifiable();
+            mockQueueStorage.Setup(q => q.EntireQueue()).ReturnsAsync(new List<IQueueItem>());
+            var mockQueueTimer = new Mock<ITimer>();
+            
+            var mockReachability = new Mock<IReachability>();
+            mockReachability.Setup(q => q.RemoteHostStatus()).Returns(NetworkStatus.NotReachable);
+            var queue = new RemoteServiceItemQueue(mockQueueStorage.Object, Enumerable.Empty<IQueueItemProcessor>(), mockQueueTimer.Object, mockReachability.Object)
+            {
+                AutoStartQueueProcessing = true
+            };
+            await queue.Enqueue("test");
+            mockQueueTimer.VerifySet(t => t.IsEnabled = true, Times.Never);
+        }
+
+        [Fact]
+        public async Task EnqueueItemWithAutoStartDisabledAndTimerDisabledDoesNotStartTimerAfterEnqueue()
+        {
+            var mockQueueStorage = new Mock<IItemQueueStorage>();
+            mockQueueStorage.Setup(q => q.Add(It.Is<string>(v => v == "test"))).ReturnsAsync(new FakeObjectItem()).Verifiable();
+            mockQueueStorage.Setup(q => q.EntireQueue()).ReturnsAsync(new List<IQueueItem>());
+            var mockQueueTimer = new Mock<ITimer>();
+            var mockReachability = new Mock<IReachability>();
+            var queue = new RemoteServiceItemQueue(mockQueueStorage.Object, Enumerable.Empty<IQueueItemProcessor>(), mockQueueTimer.Object, mockReachability.Object)
+            {
+                AutoStartQueueProcessing = false
+            };
+            await queue.Enqueue("test");
+            mockQueueTimer.VerifySet(t => t.IsEnabled = true, Times.Never);
+        }
+
+        [Fact]
         public async Task EnqueueItemCountIncremented()
         {
             var mockQueueStorage = new Mock<IItemQueueStorage>();
@@ -69,6 +138,7 @@ namespace MKS.Mobile.Core.Tests
             mockQueueTimer.Verify();
 
             timer.Elapsed(DateTime.Now);
+            Task.Delay(1000);
             mockQueueStorage.Verify();
         }
 
@@ -97,11 +167,11 @@ namespace MKS.Mobile.Core.Tests
             var timer = mockQueueTimer.Object;
 
             var mockReachability = new Mock<IReachability>();
+            mockReachability.Setup(q => q.InternetConnectionStatus()).Returns(NetworkStatus.NotReachable);
             var queue = new RemoteServiceItemQueue(mockQueueStorage.Object, new[] { mockProcessor.Object }, timer, mockReachability.Object);
-
             await queue.Enqueue("test");
             timer.Elapsed(DateTime.Now);
-            
+            await Task.Delay(1000);
             Assert.Equal(0, queue.Count);
         }
 
