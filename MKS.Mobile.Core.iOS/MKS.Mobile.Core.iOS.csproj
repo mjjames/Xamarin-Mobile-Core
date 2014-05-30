@@ -119,10 +119,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MKS.MobileApplication.ExceptionLogger.ServiceClient.1.1.0.0\lib\portable-net45+wp8+win8\MKS.ErrorTracking.ServiceClient.dll</HintPath>
     </Reference>
-    <Reference Include="MKS.Mobile.Core, Version=1.8.5231.30043, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MKS.Mobile.Core.1.8\lib\portable-net45+wp8+win8\MKS.Mobile.Core.dll</HintPath>
-    </Reference>
     <Reference Include="MonoTouch.Dialog-1" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -152,6 +148,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MKS.Mobile.Core\MKS.Mobile.Core.csproj">
+      <Project>{0e8bc1f5-a4de-4bf8-8257-0924b1d078b1}</Project>
+      <Name>MKS.Mobile.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
