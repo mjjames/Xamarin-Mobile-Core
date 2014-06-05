@@ -96,6 +96,24 @@ namespace MKS.Mobile.Core.Tests
         }
 
         [Fact]
+        public async Task EnqueueItemWithAutoStartDisabledAndTimerEnabledDoesNotDisableTimerAfterEnqueue()
+        {
+            var mockQueueStorage = new Mock<IItemQueueStorage>();
+            mockQueueStorage.Setup(q => q.Add(It.Is<string>(v => v == "test"))).ReturnsAsync(new FakeObjectItem()).Verifiable();
+            mockQueueStorage.Setup(q => q.EntireQueue()).ReturnsAsync(new List<IQueueItem>());
+            var mockQueueTimer = new Mock<ITimer>();
+            mockQueueTimer.SetupProperty(t => t.IsEnabled);
+            var mockReachability = new Mock<IReachability>();
+            var queue = new RemoteServiceItemQueue(mockQueueStorage.Object, Enumerable.Empty<IQueueItemProcessor>(), mockQueueTimer.Object, mockReachability.Object)
+            {
+                AutoStartQueueProcessing = false
+            };
+            queue.StartQueueProcessing();
+            await queue.Enqueue("test");
+            Assert.True(queue.IsQueueProcessingEnabled);
+        }
+
+        [Fact]
         public async Task EnqueueItemCountIncremented()
         {
             var mockQueueStorage = new Mock<IItemQueueStorage>();

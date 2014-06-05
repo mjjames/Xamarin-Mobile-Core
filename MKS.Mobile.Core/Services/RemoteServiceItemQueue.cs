@@ -55,7 +55,10 @@ namespace MKS.Mobile.Core.Models
             {
                 _queue.Enqueue(queueItem);
                 //following enqueue see if we should kick start start queue processing
-                _queueTimer.IsEnabled = AutoStartQueueProcessing && _reachability.RemoteHostStatus() != NetworkStatus.NotReachable;
+                if (AutoStartQueueProcessing)
+                {
+                    _queueTimer.IsEnabled = AutoStartQueueProcessing && _reachability.RemoteHostStatus() != NetworkStatus.NotReachable;
+                }
             };
             if (_isLoaded)
             {
